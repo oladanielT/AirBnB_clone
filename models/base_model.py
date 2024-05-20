@@ -11,13 +11,23 @@ class BaseModel:
     Base model
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         initialize the base model module
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                elif key == "created_at" or key == "updated_at":
+                    setattr(self, key, datetime.strptime(value, time_format))
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def save(self):
         """
@@ -55,3 +65,12 @@ if __name__ == "__main__":
     print("JSON of my_model:")
     for key in my_model_json.keys():
         print(f"\t{key}: ({type(my_model_json[key])}) - {my_model_json[key]}")
+
+    print("--")
+    my_new_model = BaseModel(**my_model_json)
+    print(my_new_model.id)
+    print(my_new_model)
+    print(type(my_new_model.created_at))
+
+    print("--")
+    print(my_model is my_new_model)
