@@ -1,0 +1,24 @@
+.places {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  .places div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  article{
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ff5a5f;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  article hi{
+    font-size: 30px;
+  }
+  
